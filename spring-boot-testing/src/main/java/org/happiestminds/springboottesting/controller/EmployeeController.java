@@ -1,5 +1,6 @@
 package org.happiestminds.springboottesting.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.happiestminds.springboottesting.model.Employee;
 import org.happiestminds.springboottesting.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/employees")
+@Slf4j
 public class EmployeeController {
 
     private EmployeeService employeeService;
@@ -23,6 +25,7 @@ public class EmployeeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Employee saveEmployee(@RequestBody Employee employee){
+        log.info("employee: {}", employee);
         Employee saveEmployee = employeeService.saveEmployee(employee);
         return saveEmployee;
     }
@@ -45,6 +48,7 @@ public class EmployeeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployee(@PathVariable("id") long employeeId, @RequestBody Employee employee){
+
 
         return employeeService.getEmployeeById(employeeId)
                 .map(savedEmployee -> {
